@@ -17,6 +17,7 @@ class WlmApi:
         self.__auth()
 
     def __get_url(self, ressource_name=''):
+        ressource_name = ressource_name[1:] if ressource_name[0] == "/" else ressource_name
         return self.host + "wlmapi/2.0/" + self.return_format + "/" + ressource_name
 
     def __auth(self):
@@ -45,3 +46,32 @@ class WlmApi:
         except Exception as e:
             print(e)
             return False
+
+    def post(self, resource, data):
+        try:
+            return self.session.post(self.__get_url(resource), data).json()
+        except Exception as e:
+            print(e)
+            return False
+
+    def get(self, resource, data=''):
+        try:
+            return self.session.get(self.__get_url(resource), params=data).json()
+        except Exception as e:
+            print(e)
+            return False
+
+    def put(self, resource, data=''):
+        try:
+            return self.session.put(self.__get_url(resource), data).json()
+        except Exception as e:
+            print(e)
+            return False
+
+    def delete(self, resource):
+        try:
+            return self.session.delete(self.__get_url(resource)).json()
+        except Exception as e:
+            print(e)
+            return False
+
